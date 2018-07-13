@@ -19,8 +19,7 @@ $.typeahead({
                     url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
                     dataType: "jsonp",
                     path: "data"
-            },
-            emptyTemplate: "no"
+            }
         }
     },
     callback: {
