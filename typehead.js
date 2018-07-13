@@ -12,7 +12,7 @@ $.typeahead({
     debug:true,
     group: true,
     maxItemPerGroup: 7,
-    emptyTemplate: "",
+    emptyTemplate: "No results for {{query}}",
     // groupTemplate:"{{group-name}}",
     // dropdownFilter: "all",
     source: {
