@@ -10,52 +10,20 @@ $.typeahead({
     debug:true,
     group: true,
     maxItemPerGroup: 7,
-    emptyTemplate: "no result for {{query}}",
-    // template: "{{display}} in {{group-name}}",
-    template:function (query, item) {
-        // var template = "{{display}}";
-        // if (item.category == 'Apps') {
-        //     template += " in {{groupName}}";
-        // }
-        // return template;
-        var template = '';
-        categories.forEach(cat => {
-            console.log(cat);
-            template +=  query+" in "+cat.display+"<br>";
-        });
-        if (item.group == 'Auto_Suggest'){
-            template += "{{display}}";
-        }
-        return template;
-    },
+    emptyTemplate: "",
     // groupTemplate:"{{group-name}}",
     // dropdownFilter: "all",
     source: {
-        Auto_Suggest:{
-            ajax: {
-                url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
-                dataType: "jsonp",
-                path: "data"
-            }
-        },
-        Apps: {
-            ajax: {
-                url: "http://www.mocky.io/v2/5b476bec2f00007200481574",
-                dataType: "jsonp",
-                path: "data",
-                success: function (data) {
-                    categories = data.data;
-                    console.log(categories);
-                }
-            }
+            auto_suggestion: {
+                ajax: {
+                    url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
+                    dataType: "jsonp",
+                    path: "data"
+            },
+            emptyTemplate: "no"
         }
     },
     callback: {
-        // onNavigateBefore: function (node, query, event) {
-        //     if (~[38,40].indexOf(event.keyCode)) {
-        //         event.preventInputChange = true;
-        //     }
-        // },
         onClick: function (node, a, item, event) {
             window.open(
                 "https://www.google.com/search?q=" +
@@ -103,6 +71,29 @@ $.typeahead({
             }
  
             $(a).find(".popover").removeClass("in").addClass("out");
+        },
+        
+    onLayoutBuiltBefore: function(node, query, result, resultHtmlList){
+        if(result.length >  0){
+            for(var i = 0 ; i < categories.length ; i++){
+                resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in  "+categories[i]+"</span></a></li>")
+            }
+            resultHtmlList.prepend('<li class="typeahead__group" data-search-group="Apps"><a href="javascript:;" tabindex="-1">Apps</a></li>');
+
         }
+        
+       return resultHtmlList;
+    },
+    onInit: function(node){
+        $.ajax({
+            url: "http://www.mocky.io/v2/5b476bec2f00007200481574",
+            method: "get",
+            dataType: "jsonp",
+            success: function (data) {
+                categories = data.data;
+                console.log(categories);
+            }
+          });
     }
+}
 });
