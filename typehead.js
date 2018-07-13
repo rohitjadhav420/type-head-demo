@@ -1,5 +1,7 @@
 let categories = [];
 
+const GROUP_NAME = "Apps";
+
 $.typeahead({
     input: '.js-typeahead-game_v1',
     minLength: 1,
@@ -19,8 +21,7 @@ $.typeahead({
                     url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
                     dataType: "jsonp",
                     path: "data"
-            },
-            emptyTemplate: "no"
+            }
         }
     },
     callback: {
@@ -76,10 +77,19 @@ $.typeahead({
     onLayoutBuiltBefore: function(node, query, result, resultHtmlList){
         if(result.length >  0){
             for(var i = 0 ; i < categories.length ; i++){
-                resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in  "+categories[i]+"</span></a></li>")
+                resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in "+categories[i]+"</span></a></li>")
             }
-            resultHtmlList.prepend('<li class="typeahead__group" data-search-group="Apps"><a href="javascript:;" tabindex="-1">Apps</a></li>');
-
+            resultHtmlList.prepend(`<li class="typeahead__group" data-search-group="${GROUP_NAME}"><a href="javascript:;" tabindex="-1">${GROUP_NAME}</a></li>`);
+            $(function() {
+                $("li").on("click",function(event) {
+                    console.log(event.target.text);
+                    window.open(  "https://www.google.com/search?q=" +
+                    // item.group + "/" +
+                    // item.id + "/" +
+                    event.target.text.replace(/[\s]|:\s/g, "-")
+                        .toLowerCase())
+                });
+              });
         }
         
        return resultHtmlList;
