@@ -75,21 +75,23 @@ $.typeahead({
         },
         
     onLayoutBuiltBefore: function(node, query, result, resultHtmlList){
-        if(result.length >  0){
-            for(var i = 0 ; i < categories.length ; i++){
-                resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in "+categories[i]+"</span></a></li>")
-            }
+        if(categories.length >  0){
+
+            categories.forEach(category => {
+                resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in "+category+"</span></a></li>");
+            });
             resultHtmlList.prepend(`<li class="typeahead__group" data-search-group="${GROUP_NAME}"><a href="javascript:;" tabindex="-1">${GROUP_NAME}</a></li>`);
             $(function() {
                 $("li").on("click",function(event) {
-                    console.log(event.target.text);
-                    window.open(  "https://www.google.com/search?q=" +
-                    // item.group + "/" +
-                    // item.id + "/" +
-                    event.target.text.replace(/[\s]|:\s/g, "-")
-                        .toLowerCase())
+                        if (event.target.text) {
+                            console.log(event.target.text);
+                            // $("#searchBox").val(event.target.text);
+                            window.open(  "https://www.google.com/search?q=" +
+                            event.target.text.replace(/[\s]|:\s/g, "-")
+                            .toLowerCase())
+                        }
+                    });
                 });
-              });
         }
         
        return resultHtmlList;
