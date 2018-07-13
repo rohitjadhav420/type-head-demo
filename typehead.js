@@ -21,17 +21,17 @@ $.typeahead({
         var template = '';
         categories.forEach(cat => {
             console.log(cat);
-            template +=  query+" in "+cat+"<br>";
+            template +=  query+" in "+cat.display+"<br>";
         });
-        if (item.group == 'Auto Suggestion'){
-            template = "{{display}}";
+        if (item.group == 'Auto_Suggest'){
+            template += "{{display}}";
         }
         return template;
     },
     // groupTemplate:"{{group-name}}",
     // dropdownFilter: "all",
     source: {
-        'Auto Suggest':{
+        Auto_Suggest:{
             ajax: {
                 url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
                 dataType: "jsonp",
