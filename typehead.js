@@ -4,13 +4,14 @@ const GROUP_NAME = "Apps";
 
 $.typeahead({
     input: '.js-typeahead-game_v1',
-    minLength: 1,
+    minLength: 3,
     maxItem: 0,
     order: "asc",
     hint: true,
     highlight:false,
     debug:true,
     group: true,
+    dynamic:true,
     maxItemPerGroup: 7,
     emptyTemplate: "No results for {{query}}",
     // groupTemplate:"{{group-name}}",
@@ -75,7 +76,7 @@ $.typeahead({
         },
         
     onLayoutBuiltBefore: function(node, query, result, resultHtmlList){
-        if(categories.length >  0){
+        if(result.length >  0){
 
             categories.forEach(category => {
                 resultHtmlList.prepend("<li class='typeahead__item typeahead__group-apps'><a href='javascript:;'><span class='typeahead__display'>"+query+" in "+category+"</span></a></li>");
