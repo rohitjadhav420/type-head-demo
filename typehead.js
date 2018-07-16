@@ -10,7 +10,7 @@ $.typeahead({
     hint: true,
     highlight:false,
     debug:true,
-    group: true,
+    group: "category",
     maxItemPerGroup: 7,
     emptyTemplate: "No results for {{query}}",
     // groupTemplate:"{{group-name}}",
@@ -18,7 +18,7 @@ $.typeahead({
     source: {
             auto_suggestion: {
                 ajax: {
-                    url: "http://www.mocky.io/v2/5b47658f2f0000690048154e",
+                    url: "http://www.mocky.io/v2/5b4c3e123100009604a7dee1",
                     dataType: "jsonp",
                     path: "data"
             }
